@@ -1,4 +1,4 @@
-MinPubSub
+pubsub.js
 =========
 
 A tiny pubsub implementation in the spirit of [microjs.com](http://www.microjs.com)

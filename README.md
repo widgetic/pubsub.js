@@ -1,52 +1,50 @@
 MinPubSub
 =========
 
-A micro publish/subscribe messaging framework, weighing in at only **198 bytes** gzipped. Created by rewriting Peter Higgins' jQuery plugin, MinPubSub is completely self contained with no external dependencies. Keep your projects loosely coupled with this powerful design pattern. Also available on <http://search.npmjs.org/#/minpubsub>.
+A tiny pubsub implementation in the spirit of [microjs.com](http://www.microjs.com)
+evolved from an original implementation by [Daniel Lamb](http://daniellmb.com).
 
-### Features
+Supported platforms
+-------------------
+*	Node.js
+*	Rhino
+*	EcmaScript 5 capable browsers
+	*	Google Chrome 5+
+	*	Safari 4+
+	*	Internet Explorer 5+
+	*	Firefox 3+
+	*	Opera 10+
+	*	Android
+	*	Mobile Safari
+	*	Firefox Mobile (Fennec)
+	*	Opera Mobile 10+
 
-- Supports
-	- publish
-	- subscribe
-	- unsubscribe
-
-- Tested Environments
-	- ES5
-	- Node.js
-	- Rhino
-	- Development (console, etc.) 
-	- Safari 4 - 5
-	- Google Chrome 5 - 10
-	- Internet Explorer 5 - 9
-	- iPhone Safari
-	- iPad Safari
-	- Firefox 3 - 4
-	- Opera 10.61
-
-### How to use
+Example
+-------
 
 ```javascript
+	var p = PubSub;// or require('pubsub');
+
 	//subscribe to a topic
-	var handle = subscribe("/some/topic", function(msg){
+	var handle = p.subscribe("/some/topic", function(msg){
 		console.log(msg);
 	});
 
 	//publish topic a few times
-	publish("/some/topic", ["first time"]);
-	publish("/some/topic", ["second time"]);
+	p.publish("/some/topic", ["first time"]);
+	p.publish("/some/topic", ["second time"]);
 
 	//unsubscribe from the topic
-	unsubscribe(handle);
+	p.unsubscribe(handle);
 
 	//subscriber is no longer listening to the topic
-	publish("/some/topic", ["message will not be logged"]);
+	p.publish("/some/topic", ["message will not be logged"]);
 ```
 
-### Documentation 
-
-##### Options:
-
-If you don't want these methods added to the window object simply modify the immediate function to pass in the JavaScript object of your choosing.
+Documentation
+------------- 
+The library is implemented as a universal module, in non-AMD environments can be
+used via the global PubSub instance.
 
 ##### Methods:
 
@@ -102,29 +100,3 @@ If you don't want these methods added to the window object simply modify the imm
 		var handle = subscribe("/some/topic", function(){});
 		unsubscribe(handle);
 		  ```
-
-
-### License 
-
-(The MIT License)
-
-Copyright (c) 2011 Daniel Lamb <daniellmb.com>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

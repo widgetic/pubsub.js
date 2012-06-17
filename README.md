@@ -37,7 +37,7 @@ Using the library as a traditional Javascript module:
 	});
 
 	//publish a message
-	p.publish("/some/channel", ["Hello!"]);
+	p.publish("/some/channel", "Hello!");
 
 	//unsubscribe from the topic
 	p.unsubscribe(handle);
@@ -54,7 +54,7 @@ Here's the same example using the library as a standard CommonJS module:
 	});
 
 	//publish a message
-	p.publish("/some/channel", ["Hello!"]);
+	p.publish("/some/channel", "Hello!");
 
 	//unsubscribe from the topic
 	p.unsubscribe(handle);
@@ -66,16 +66,23 @@ Alternatively using the library as an AMD module (where possible, see
 ```javascript
 	require('pubsub', function(p){
 		//subscribe to a channel
-		var handle = p.subscribe("/some/channel", function(msg){
+		var handle = p.subscribe("some/channel", function(msg){
 			console.log(msg);
 		});
 	
 		//publish a message
-		p.publish("/some/channel", ["Hello!"]);
+		p.publish("/some/channel", "Hello!");
 	
 		//unsubscribe from the topic
 		p.unsubscribe(handle);
 	});
+```
+
+The publish function support any number and type of data parameters:
+
+```javascript
+	PubSub.subscribe('/some/channel', function( a, b, c, d ){ /* ... */ });
+	PubSub.publish('/some/channel', 1 /* a */, "two" /* b */, [3, 4, 5] /* c */, {total: 15} /* d */);
 ```
 
 Documentation

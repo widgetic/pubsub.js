@@ -6,16 +6,16 @@
 * Original implementation by Daniel Lamb <daniellmb.com>
 */
 
-var context = this;
+var c = this;
 
 (function(){
 	//universal module
-	if(context.module)//CommonJS module
-		context.module.exports = init();
-	else if(context.define)//CommonJS AMD module
-		context.define("pubsub", init);
+	if(c.module)//CommonJS module
+		c.module.exports = init();
+	else if(c.define)//CommonJS AMD module
+		c.define("pubsub", init);
 	else//traditional module
-		context.PubSub = init();
+		c.PubSub = init();
 
 	function init(){
 		// the topic/subscription hash
@@ -26,20 +26,25 @@ var context = this;
 			 * Publish some data on a named topic
 			 *
 			 * @param String channel The channel to publish on
-			 * @param Array args The data to publish. Each array item is
-			 * converted into an ordered arguments on the subscribed functions
+			 * @param Mixed argument The data to publish, the function supports
+			 * as many data parameters as needed
 			 *
-			 * @example Publish stuff on '/some/topic'. Anything subscribed will be called with a function signature like: function(a,b,c){ ... }
-			 * PubSub.publish("/some/topic", ["a", "b", "c"]);
+			 * @example Publish stuff on '/some/channel'. Anything subscribed will
+			 * be called with a function signature like: function(a,b,c){ ... }
+			 * PubSub.publish("/some/channel", "a", "b", {total: 10, min: 1, max: 3});
 			 */
-			publish: function(channel, args){
-				var subs = cache[channel],
-					len = subs ? subs.length : 0,
-					args = args ? args : [];
+			publish: function(){
+				var subs = cache[arguments[0] /* channel */];
 
-				//can change loop or reverse array if the order matters
-				while(len--)
-					subs[len].apply(context, args);
+				if(subs){
+					var len = subs.length,
+						args = (arguments.length > 1) ? Array.prototype.splice.call(arguments, 1) : [],
+						x = 0;
+
+					//executes callbacks in the order in which they were regustered
+					for(; x < len; x++)
+						subs[x].apply(c, args);
+				}
 			},
 
 			/*
@@ -105,6 +110,6 @@ var context = this;
 	}	
 })();
 
-//don't hold a reference to the context to facilitate garbage collection in some
+//don't hold a reference to the c to facilitate garbage collection in some
 //environments
-context = null;
+c = null;

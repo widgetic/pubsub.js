@@ -1,8 +1,13 @@
 pubsub.js
 =========
 
-A tiny pubsub implementation in the spirit of [microjs.com](http://www.microjs.com)
-evolved from an original implementation by [Daniel Lamb](http://daniellmb.com).
+A tiny (~600 bytes when minified, ~300 bytes when gzip'd)
+[pubsub](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
+implementation in the spirit of [microjs.com](http://www.microjs.com) evolved
+from an original implementation by [Daniel Lamb](http://daniellmb.com).
+
+The library is implemented as a universal module to support CommonJS-enabled, AMD-enabled and
+traditional Javascript environments.
 
 Supported platforms
 -------------------
@@ -22,81 +27,59 @@ Supported platforms
 Example
 -------
 
-```javascript
-	var p = PubSub;// or require('pubsub');
+Using the library as a traditional Javascript module:
 
-	//subscribe to a topic
-	var handle = p.subscribe("/some/topic", function(msg){
+```javascript
+	var p = PubSub;
+
+	//subscribe to a channel
+	var handle = p.subscribe("/some/channel", function(msg){
 		console.log(msg);
 	});
 
-	//publish topic a few times
-	p.publish("/some/topic", ["first time"]);
-	p.publish("/some/topic", ["second time"]);
+	//publish a message
+	p.publish("/some/channel", ["Hello!"]);
 
 	//unsubscribe from the topic
 	p.unsubscribe(handle);
+```
 
-	//subscriber is no longer listening to the topic
-	p.publish("/some/topic", ["message will not be logged"]);
+Here's the same example using the library as a standard CommonJS module:
+
+```javascript
+	var p = require('pubsub');
+
+	//subscribe to a channel
+	var handle = p.subscribe("/some/channel", function(msg){
+		console.log(msg);
+	});
+
+	//publish a message
+	p.publish("/some/channel", ["Hello!"]);
+
+	//unsubscribe from the topic
+	p.unsubscribe(handle);
+```
+
+Alternatively, use the library as an AMD module (where possible, see
+[RequireJS](http://requirejs.org/) for more info):
+
+```javascript
+	require('pubsub', function(p){
+		//subscribe to a channel
+		var handle = p.subscribe("/some/channel", function(msg){
+			console.log(msg);
+		});
+	
+		//publish a message
+		p.publish("/some/channel", ["Hello!"]);
+	
+		//unsubscribe from the topic
+		p.unsubscribe(handle);
+	});
 ```
 
 Documentation
 ------------- 
-The library is implemented as a universal module, in non-AMD environments can be
-used via the global PubSub instance.
-
-##### Methods:
-
-- **publish** *(`String` topic, `Array?` args)*
-
-	- summary: 
-		- Publish some data on a named topic.
-	
-	- topic: `String`
-		- The channel to publish on
-	
-	- args: `Array?`
-		- Optional data to publish. Each array item is converted into ordered arguments on the subscribed functions. 
-	
-	- example:
-		- Publish stuff on '/some/topic'. Anything subscribed will be called with a function signature like: function(a,b,c){ ... }
-
-		  ```javascript
-		  publish("/some/topic", ["a","b","c"]);
-		  ```
-
-- **subscribe** *(`String` topic, `Function` callback)*
-
-	- summary:
-		- Register a callback on a named topic.
-
-	- topic: `String`
-		- The channel to subscribe to
-
-	- callback: `Function`
-		- The handler event. Anytime something is publish'ed on a subscribed channel, the callback will be called with the published array as ordered arguments.
-
-	- returns: `Array`
-		- A handle which can be used to unsubscribe this particular subscription.
-
-	- example:
-
-		  ```javascript
-		  subscribe("/some/topic", function(a, b, c){ /* handle data */ });
-		  ```
-
-- **unsubscribe** *(`Array` handle)*
-
-	- summary:
-		- Disconnect a subscribed function for a topic.
-
-	- handle: `Array`
-		- The return value from a subscribe call.
-	
-	- example:
-
-		```javascript
-		var handle = subscribe("/some/topic", function(){});
-		unsubscribe(handle);
-		  ```
+The description of each method and its' parameters are inlined in the [library's
+source](https://github.com/federico-lox/pubsub.js/blob/master/pubsub.js) using the Javadoc syntax.

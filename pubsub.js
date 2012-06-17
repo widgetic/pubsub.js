@@ -10,9 +10,11 @@ var context = this;
 
 (function(){
 	//universal module
-	if(root.define)
+	if(context.module)//CommonJS module
+		context.module.exports = init();
+	else if(context.define)//CommonJS AMD module
 		context.define("pubsub", init);
-	else
+	else//traditional module
 		context.PubSub = init();
 
 	function init(){
@@ -102,3 +104,7 @@ var context = this;
 		};
 	}	
 })();
+
+//don't hold a reference to the context to facilitate garbage collection in some
+//environments
+context = null;

@@ -24,9 +24,8 @@ Supported platforms
 	*	Firefox Mobile (Fennec)
 	*	Opera Mobile 10+
 
-Example
--------
-
+Examples
+--------
 Using the library as a traditional Javascript module:
 
 ```javascript
@@ -61,7 +60,7 @@ Here's the same example using the library as a standard CommonJS module:
 	p.unsubscribe(handle);
 ```
 
-Alternatively, use the library as an AMD module (where possible, see
+Alternatively using the library as an AMD module (where possible, see
 [RequireJS](http://requirejs.org/) for more info):
 
 ```javascript

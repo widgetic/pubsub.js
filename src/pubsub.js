@@ -1,25 +1,24 @@
 /*!
-* MinPubSub
+* pubsub.js
 * 
 * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
 * 
 * Original implementation by Daniel Lamb <daniellmb.com>
 */
 
-var c = this;
-
 (function(){
 	//universal module
-	if(c.module)//CommonJS module
-		c.module.exports = init();
-	else if(c.define)//CommonJS AMD module
-		c.define("pubsub", init);
+	if(typeof module != "undefined")//CommonJS module
+		module.exports = init();
+	else if(typeof define != "undefined")//CommonJS AMD module
+		define("pubsub", init);
 	else//traditional module
-		c.PubSub = init();
+		PubSub = init();
 
 	function init(){
 		// the topic/subscription hash
-		var cache = {};
+		var cache = {},
+			context = {};
 
 		return {
 			/*
@@ -43,7 +42,7 @@ var c = this;
 
 					//executes callbacks in the order in which they were regustered
 					for(; x < len; x++)
-						subs[x].apply(c, args);
+						subs[x].apply(context, args);
 				}
 			},
 
@@ -61,6 +60,8 @@ var c = this;
 			 * @example PubSub.subscribe("/some/topic", function(a, b, c){ ... });
 			 */
 			subscribe: function(channel, callback){
+				if(!channel)
+					throw "channel not specified";
 				if(!(callback instanceof Function))
 					throw "callback is not a function";
 
@@ -94,6 +95,9 @@ var c = this;
 					handle = handle[0];
 				}
 
+				if(typeof handle != "string")
+					throw "channel not specified";
+
 				if(!(callback instanceof Function))
 					throw "callback is not a function";
 
@@ -109,7 +113,3 @@ var c = this;
 		};
 	}	
 })();
-
-//don't hold a reference to the c to facilitate garbage collection in some
-//environments
-c = null;

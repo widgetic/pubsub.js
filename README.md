@@ -1,7 +1,7 @@
 pubsub.js
 =========
 
-A tiny (~600 bytes when minified, ~300 bytes when gzip'd)
+A tiny (~600 bytes when minified, ~300 bytes when gzip'd) and robust
 [pubsub](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
 implementation in the spirit of [microjs.com](http://www.microjs.com) evolved
 from an original implementation by [Daniel Lamb](http://daniellmb.com).
@@ -88,4 +88,11 @@ The publish function support any number and type of data parameters:
 Documentation
 ------------- 
 The description of each method and its' parameters are inlined in the [library's
-source](https://github.com/federico-lox/pubsub.js/blob/master/pubsub.js) using the Javadoc syntax.
+source](https://github.com/federico-lox/pubsub.js/blob/master/pubsub.js) using
+the Javadoc syntax.
+
+QA
+--
+The library has been tested toroughly and the functionality is secured with a
+complete [set of unit tests](https://github.com/federico-lox/pubsub.js/tree/master/spec)
+built with [Jasmine](http://pivotal.github.com/jasmine/).

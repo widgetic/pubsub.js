@@ -13,6 +13,7 @@ Supported platforms
 -------------------
 *	Node.js
 *	Rhino
+*	Appcelerator Titanium Mobile 2.0+
 *	EcmaScript 5 capable browsers
 	*	Google Chrome 5+
 	*	Safari 4+

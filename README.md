@@ -2,12 +2,17 @@ pubsub.js
 =========
 
 A tiny (~600 bytes when minified, ~300 bytes when gzip'd) and robust
-[pubsub](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
+[pubsub](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
 implementation in the spirit of [microjs.com](http://www.microjs.com) evolved
 from an original implementation by [Daniel Lamb](http://daniellmb.com).
 
 The library is implemented as a universal module to support CommonJS-enabled, AMD-enabled and
-traditional Javascript environments.
+traditional Javascript environments and the code is optimized to be as compact,
+fast and memory-savvy as possible.
+
+The library has been tested toroughly and the functionality is secured with a
+complete [set of unit tests](https://github.com/federico-lox/pubsub.js/tree/master/spec)
+built with [Jasmine](http://pivotal.github.com/jasmine/).
 
 Supported platforms
 -------------------
@@ -25,8 +30,13 @@ Supported platforms
 	*	Firefox Mobile (Fennec)
 	*	Opera Mobile 10+
 
-Examples
---------
+Documentation
+------------- 
+The description of each method and its' parameters are inlined in the [library's
+source](https://github.com/federico-lox/pubsub.js/blob/master/src/pubsub.js) using
+the Javadoc syntax.
+
+### Examples ###
 Using the library as a traditional Javascript module:
 
 ```javascript
@@ -85,15 +95,3 @@ The publish function support any number and type of data parameters:
 	PubSub.subscribe('/some/channel', function( a, b, c, d ){ /* ... */ });
 	PubSub.publish('/some/channel', 1 /* a */, "two" /* b */, [3, 4, 5] /* c */, {total: 15} /* d */);
 ```
-
-Documentation
-------------- 
-The description of each method and its' parameters are inlined in the [library's
-source](https://github.com/federico-lox/pubsub.js/blob/master/src/pubsub.js) using
-the Javadoc syntax.
-
-QA
---
-The library has been tested toroughly and the functionality is secured with a
-complete [set of unit tests](https://github.com/federico-lox/pubsub.js/tree/master/spec)
-built with [Jasmine](http://pivotal.github.com/jasmine/).

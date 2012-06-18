@@ -4,7 +4,8 @@ pubsub.js
 A tiny (~600 bytes when minified, ~300 bytes when gzip'd) and robust
 [pubsub](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
 implementation in the spirit of [microjs.com](http://www.microjs.com) evolved
-from an original implementation by [Daniel Lamb](http://daniellmb.com).
+from an original implementation by [Daniel Lamb](http://daniellmb.com)
+(of which, after refactoring and optimizing, only the method names have been kept).
 
 The library is implemented as a universal module to support CommonJS-enabled, AMD-enabled and
 traditional Javascript environments and the code is optimized to be as compact,

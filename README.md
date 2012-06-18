@@ -10,7 +10,7 @@ The library is implemented as a universal module to support CommonJS-enabled, AM
 traditional Javascript environments and the code is optimized to be as compact,
 fast and memory-savvy as possible.
 
-The library has been tested toroughly and the functionality is secured with a
+The code has been tested toroughly and the functionality is secured with a
 complete [set of unit tests](https://github.com/federico-lox/pubsub.js/tree/master/spec)
 built with [Jasmine](http://pivotal.github.com/jasmine/).
 

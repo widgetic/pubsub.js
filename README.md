@@ -88,7 +88,7 @@ The publish function support any number and type of data parameters:
 Documentation
 ------------- 
 The description of each method and its' parameters are inlined in the [library's
-source](https://github.com/federico-lox/pubsub.js/blob/master/pubsub.js) using
+source](https://github.com/federico-lox/pubsub.js/blob/master/src/pubsub.js) using
 the Javadoc syntax.
 
 QA

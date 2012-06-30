@@ -110,11 +110,10 @@
 					len = subs ? subs.length : 0;
 				
 				while(len--){
-					if(subs[len] === callback){
+					if(subs[len] === callback)
 						subs.splice(len, 1);
-					}
 				}
 			}
 		};
-	}
+	};
 })(this);

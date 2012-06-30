@@ -6,23 +6,27 @@
 * Original implementation by Daniel Lamb <daniellmb.com>
 */
 
-(function(context){
+(this.__pubsub_js_init__ = function(context){
+	//help code minification
+	var m = context.module,
+		d = context.define;
+	
 	//universal module
-	if(context.module)//CommonJS module
-		context.module.exports = init();
-	else if(context.define)//CommonJS AMD module
-		context.define("pubsub", init);
+	if(m)//CommonJS module
+		m.exports = init();
+	else if(d)//CommonJS AMD module
+		d("pubsub", init);
 	else//traditional module
 		context.PubSub = init();
 
 	function init(){
-		// the topic/subscription hash
-		var cache = {},
-			context = {};
+		
+		var channels = {},// the channel subscription hash
+			funcType = Function;//help minification
 
 		return {
 			/*
-			 * Publish some data on a named topic
+			 * Publish some data on a channel
 			 *
 			 * @param String channel The channel to publish on
 			 * @param Mixed argument The data to publish, the function supports
@@ -33,48 +37,49 @@
 			 * PubSub.publish("/some/channel", "a", "b", {total: 10, min: 1, max: 3});
 			 */
 			publish: function(){
-				var subs = cache[arguments[0] /* channel */];
+				var args = arguments,//help minification
+					subs = channels[args[0] /* channel */];
 
 				if(subs){
 					var len = subs.length,
-						args = (arguments.length > 1) ? Array.prototype.splice.call(arguments, 1) : [],
+						params = (args.length > 1) ? Array.prototype.splice.call(args, 1) : [],
 						x = 0;
 
-					//executes callbacks in the order in which they were regustered
+					//executes callbacks in the order in which they were registered
 					for(; x < len; x++)
-						subs[x].apply(context, args);
+						subs[x].apply(context, params);
 				}
 			},
 
 			/*
-			 * Register a callback on a named topic
+			 * Register a callback on a channel
 			 * 
 			 * @param String channel The channel to subscribe to
-			 * @param Function callback The event handler, anytime something is
-			 * publish'ed on a subscribed channel, the callback will be called
+			 * @param Function callback The event handler, any time something is
+			 * published on a subscribed channel, the callback will be called
 			 * with the published array as ordered arguments
 			 * 
 			 * @return Array A handle which can be used to unsubscribe this
 			 * particular subscription
 			 *
-			 * @example PubSub.subscribe("/some/topic", function(a, b, c){ ... });
+			 * @example PubSub.subscribe("/some/channel", function(a, b, c){ ... });
 			 */
 			subscribe: function(channel, callback){
 				if(!channel)
 					throw "channel not specified";
-				if(!(callback instanceof Function))
+				if(!(callback instanceof funcType))
 					throw "callback is not a function";
 
-				if(!cache[channel])
-					cache[channel] = [];
+				if(!channels[channel])
+					channels[channel] = [];
 
-				cache[channel].push(callback);
+				channels[channel].push(callback);
 
 				return [channel, callback];
 			},
 
 			/*
-			 * Disconnect a subscribed function for a topic.
+			 * Disconnect a subscribed function f.
 			 * 
 			 * @param Mixed handle The return value from a subscribe call or the
 			 * name of a channel as a String
@@ -82,12 +87,12 @@
 			 * registered, not needed if handle contains the return value of subscribe
 			 * 
 			 * @example
-			 * var handle = PubSub.subscribe("/some/topic", function(){});
+			 * var handle = PubSub.subscribe("/some/channel", function(){});
 			 * PubSub.unsubscribe(handle);
 			 * 
 			 * or
 			 * 
-			 * PubSub.unsubscribe("/some/topic", callback);
+			 * PubSub.unsubscribe("/some/channel", callback);
 			 */
 			unsubscribe: function(handle, callback){
 				if(handle instanceof Array && handle.length > 1){
@@ -98,10 +103,10 @@
 				if(typeof handle != "string")
 					throw "channel not specified";
 
-				if(!(callback instanceof Function))
+				if(!(callback instanceof funcType))
 					throw "callback is not a function";
 
-				var subs = cache[handle],
+				var subs = channels[handle],
 					len = subs ? subs.length : 0;
 				
 				while(len--){
@@ -111,5 +116,5 @@
 				}
 			}
 		};
-	}	
+	}
 })(this);

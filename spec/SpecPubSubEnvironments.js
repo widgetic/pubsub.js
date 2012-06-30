@@ -4,59 +4,55 @@
  * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
  */
 
-//this test is a bit hacky since it requires mocking different JS environments
-//and re-initialize the code each time
-describe("Supported environments", function(){
-	var definedModule = {},
-	scriptPath = "src/pubsub.js",
-	xhReq = new XMLHttpRequest(),
-	code;
+var context = this;
 
-	//fetch the library code
-	xhReq.open("GET", scriptPath, false /* synchronous */);
-	xhReq.send(null);
-	code = xhReq.responseText;
+describe("Supported environments", function(){
+	var fakeContext;
+
+	function initModule(scope){
+		context.__pubsub_js_init__(scope);
+	}
 
 	beforeEach(function(){
 		this.addMatchers({
 			toMatchImplementation: function(){
 				var api = this.actual;
-				return api && api.publish && api.subscribe && api.unsubscribe;
+				return api &&
+					(api.publish instanceof Function) &&
+					(api.subscribe instanceof Function) &&
+					(api.unsubscribe instanceof Function);
 			}
-		})
+		});
 	})
 
-	afterEach(function(){
-		//re-initialize the library
-		eval(code);
-	});
-
 	it("Should work as a traditional JS module", function(){
-		expect(PubSub).toMatchImplementation();
-
-		//prepare for next test
-		window.module = {
-			exports: {}
-		};
+		fakeContext = {};
+		initModule(fakeContext);
+		expect(fakeContext.PubSub).toMatchImplementation();
 	});
 
 	it("Should work as a CommonJS module", function(){
-		expect(module.exports).toMatchImplementation();
-
-		//prepare for next test
-		window.module = undefined;
-		window.define = function(name, func){
-			definedModule.name = name;
-			definedModule.instance = func();	
+		fakeContext = {
+			module: {
+				exports: {}
+			}
 		};
+
+		initModule(fakeContext);
+		expect(fakeContext.module.exports).toMatchImplementation();
 	});
 
 	it("Should work as an AMD module", function(){
+		var definedModule = {};
+		fakeContext = {
+			define: function(name, func){
+				definedModule.name = name;
+				definedModule.instance = func();	
+			}
+		};
+
+		initModule(fakeContext);
 		expect(definedModule.name).toEqual('pubsub');
 		expect(definedModule.instance).toMatchImplementation();
-
-		//cleanup
-		window.define = undefined;
-		definedModule = null;
 	});
 });

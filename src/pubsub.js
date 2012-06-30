@@ -6,14 +6,14 @@
 * Original implementation by Daniel Lamb <daniellmb.com>
 */
 
-(function(){
+(function(context){
 	//universal module
-	if(typeof module != "undefined")//CommonJS module
-		module.exports = init();
-	else if(typeof define != "undefined")//CommonJS AMD module
-		define("pubsub", init);
+	if(context.module)//CommonJS module
+		context.module.exports = init();
+	else if(context.define)//CommonJS AMD module
+		context.define("pubsub", init);
 	else//traditional module
-		PubSub = init();
+		context.PubSub = init();
 
 	function init(){
 		// the topic/subscription hash
@@ -112,4 +112,4 @@
 			}
 		};
 	}	
-})();
+})(this);

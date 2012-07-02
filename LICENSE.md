@@ -4,7 +4,7 @@ The MIT License
 Source code for pubsub.js is Copyright © 2012–2013
 [Federico "Lox" Lucignano](https://plus.google.com/117046182016070432246 "Google profile"),
 © 2011 [Daniel Lamb](daniellmb.com) and
-[contributors](http://github.com/federico-lox/pubsub.js/contributors "MinPubSub contributors at GitHub").
+[contributors](http://github.com/federico-lox/pubsub.js/contributors "pubsub.js contributors at GitHub").
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in

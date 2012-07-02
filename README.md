@@ -18,6 +18,7 @@ built with [Jasmine](http://pivotal.github.com/jasmine/).
 
 Supported platforms
 -------------------
+
 *	Node.js
 *	Rhino
 *	Appcelerator Titanium Mobile 2.0+
@@ -33,7 +34,8 @@ Supported platforms
 	*	Opera Mobile 10+
 
 Documentation
-------------- 
+-------------
+
 The description of each method and its' parameters are inlined in the [library's
 source](https://github.com/federico-lox/pubsub.js/blob/master/src/pubsub.js) using
 the Javadoc syntax.
@@ -97,3 +99,10 @@ The publish function support any number and type of data parameters:
 	PubSub.subscribe('/some/channel', function( a, b, c, d ){ /* ... */ });
 	PubSub.publish('/some/channel', 1 /* a */, "two" /* b */, [3, 4, 5] /* c */, {total: 15} /* d */);
 ```
+
+Credits
+-------
+
+*	[Federico "Lox" Lucignano](https://plus.google.com/117046182016070432246 "Google profile"), creator and mantainer
+*	[Daniel Lamb](daniellmb.com), original code
+*	All the [contributors](http://github.com/federico-lox/pubsub.js/contributors "pubsub.js contributors at GitHub")

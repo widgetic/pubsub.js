@@ -31,10 +31,9 @@ describe("API", function(){
 				h = PubSub.subscribe(c, a);
 
 			expect(h).toBeDefined();
-			expect(h instanceof Array).toEqual(true);
-			expect(h.length).toEqual(2);
-			expect(h[0]).toEqual(c);
-			expect(h[1]).toBe(a);
+			expect(h instanceof Object).toEqual(true);
+			expect(h.channel).toEqual(c);
+			expect(h.callback).toBe(a);
 		});
 	});
 

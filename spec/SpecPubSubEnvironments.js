@@ -9,10 +9,6 @@ var context = this;
 describe("Supported environments", function(){
 	var fakeContext;
 
-	function initModule(scope){
-		context.__pubsub_js_init__(scope);
-	}
-
 	beforeEach(function(){
 		this.addMatchers({
 			toMatchImplementation: function(){
@@ -26,33 +22,16 @@ describe("Supported environments", function(){
 	})
 
 	it("Should work as a traditional JS module", function(){
-		fakeContext = {};
-		initModule(fakeContext);
-		expect(fakeContext.PubSub).toMatchImplementation();
+		expect(PubSub).toMatchImplementation();
 	});
 
-	it("Should work as a CommonJS module", function(){
-		fakeContext = {
-			module: {
-				exports: {}
-			}
-		};
-
-		initModule(fakeContext);
-		expect(fakeContext.module.exports).toMatchImplementation();
+	xit("Should work as a CommonJS module", function(){
+		expect(require('pubsub')).toMatchImplementation();
 	});
 
-	it("Should work as an AMD module", function(){
-		var definedModule = {};
-		fakeContext = {
-			define: function(name, func){
-				definedModule.name = name;
-				definedModule.instance = func();	
-			}
-		};
-
-		initModule(fakeContext);
-		expect(definedModule.name).toEqual('pubsub');
-		expect(definedModule.instance).toMatchImplementation();
+	xit("Should work as an AMD module", function(){
+		require('pubsub', function(p){
+			expect(p).toMatchImplementation();
+		});
 	});
 });

@@ -6,16 +6,12 @@
 * Original implementation by Daniel Lamb <daniellmb.com>
 */
 
-(this.__pubsub_js_init__ = function(context){
-	//help code minification
-	var m = context.module,
-		d = context.define;
-	
-	//universal module
-	if(m)//CommonJS module
-		m.exports = init();
-	else if(d)//CommonJS AMD module
-		d("pubsub", init);
+(function(context){
+	//UMD
+	if(typeof module == 'object')//CommonJS module
+		module.exports = init();
+	else if(typeof define == 'function')//AMD module
+		define("pubsub", init);
 	else//traditional module
 		context.PubSub = init();
 
@@ -65,17 +61,18 @@
 			 * @example PubSub.subscribe("/some/channel", function(a, b, c){ ... });
 			 */
 			subscribe: function(channel, callback){
-				if(!channel)
-					throw "channel not specified";
+				if(typeof channel != 'string')
+					throw "invalid or missing channel";
+
 				if(!(callback instanceof funcType))
-					throw "callback is not a function";
+					throw "invalid or missing callback";
 
 				if(!channels[channel])
 					channels[channel] = [];
 
 				channels[channel].push(callback);
 
-				return [channel, callback];
+				return {channel: channel, callback: callback};
 			},
 
 			/*
@@ -95,19 +92,19 @@
 			 * PubSub.unsubscribe("/some/channel", callback);
 			 */
 			unsubscribe: function(handle, callback){
-				if(handle instanceof Array && handle.length > 1){
-					callback = handle[1];
-					handle = handle[0];
+				if(handle.channel && handle.callback){
+					callback = handle.callback;
+					handle = handle.channel;
 				}
 
-				if(typeof handle != "string")
-					throw "channel not specified";
+				if(typeof handle != 'string')
+					throw "invalid or missing channel";
 
 				if(!(callback instanceof funcType))
-					throw "callback is not a function";
+					throw "invalid or missing callback";
 
 				var subs = channels[handle],
-					len = subs ? subs.length : 0;
+					len = (subs instanceof Array) ? subs.length : 0;
 				
 				while(len--){
 					if(subs[len] === callback)
@@ -116,4 +113,4 @@
 			}
 		};
 	};
-})(this);
+}(this));

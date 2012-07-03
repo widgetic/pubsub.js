@@ -16,6 +16,9 @@
 	else//traditional module
 		context.PubSub = init();
 
+	/**
+	 * @private
+	 */
 	function init(){
 		
 		var channels = {},// the channel subscription hash
@@ -23,6 +26,8 @@
 
 		return {
 			/*
+			 * @public
+			 * 
 			 * Publish some data on a channel
 			 *
 			 * @param String channel The channel to publish on
@@ -49,6 +54,8 @@
 			},
 
 			/*
+			 * @public
+			 * 
 			 * Register a callback on a channel
 			 * 
 			 * @param String channel The channel to subscribe to
@@ -77,6 +84,8 @@
 			},
 
 			/*
+			 * @public
+			 * 
 			 * Disconnect a subscribed function f.
 			 * 
 			 * @param Mixed handle The return value from a subscribe call or the

@@ -38,10 +38,19 @@
 						params = (args.length > 1) ? Array.prototype.splice.call(args, 1) : [],
 						x = 0;
 
-					//executes callbacks in the order in which they were registered
-					for(; x < len; x++){
-						subs[x].apply(context, params);
-					}
+					//run the callbacks asynchronously, do not block the main execution process
+					setTimeout(
+						function(){
+							//executes callbacks in the order in which they were registered
+							for(; x < len; x++){
+								subs[x].apply(context, params);
+							}
+
+							//clear references to allow garbage collection
+							subs = context = params = null;
+						},
+						0
+					);
 				}
 			},
 

@@ -1,33 +1,24 @@
 /*!
 * pubsub.js
-* 
+*
 * A tiny, optimized, tested, standalone and robust pubsub implementation supporting different javascript environments
-* 
+*
 * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
 * @see https://github.com/federico-lox/pubsub.js
 */
 
 (function(context){
-	//UMD
-	if(typeof module == 'object')//CommonJS module
-		module.exports = init();
-	else if(typeof define == 'function')//AMD module
-		define("pubsub", init);
-	else//traditional module
-		context.PubSub = init();
-
 	/**
 	 * @private
 	 */
 	function init(){
-		
 		var channels = {},// the channel subscription hash
 			funcType = Function;//help minification
 
 		return {
 			/*
 			 * @public
-			 * 
+			 *
 			 * Publish some data on a channel
 			 *
 			 * @param String channel The channel to publish on
@@ -48,35 +39,39 @@
 						x = 0;
 
 					//executes callbacks in the order in which they were registered
-					for(; x < len; x++)
+					for(; x < len; x++){
 						subs[x].apply(context, params);
+					}
 				}
 			},
 
 			/*
 			 * @public
-			 * 
+			 *
 			 * Register a callback on a channel
-			 * 
+			 *
 			 * @param String channel The channel to subscribe to
 			 * @param Function callback The event handler, any time something is
 			 * published on a subscribed channel, the callback will be called
 			 * with the published array as ordered arguments
-			 * 
+			 *
 			 * @return Array A handle which can be used to unsubscribe this
 			 * particular subscription
 			 *
 			 * @example PubSub.subscribe("/some/channel", function(a, b, c){ ... });
 			 */
 			subscribe: function(channel, callback){
-				if(typeof channel != 'string')
+				if(typeof channel !== 'string'){
 					throw "invalid or missing channel";
+				}
 
-				if(!(callback instanceof funcType))
+				if(!(callback instanceof funcType)){
 					throw "invalid or missing callback";
+				}
 
-				if(!channels[channel])
+				if(!channels[channel]){
 					channels[channel] = [];
+				}
 
 				channels[channel].push(callback);
 
@@ -85,20 +80,20 @@
 
 			/*
 			 * @public
-			 * 
+			 *
 			 * Disconnect a subscribed function f.
-			 * 
+			 *
 			 * @param Mixed handle The return value from a subscribe call or the
 			 * name of a channel as a String
 			 * @param Function callback [OPTIONAL] The event handler originaally
 			 * registered, not needed if handle contains the return value of subscribe
-			 * 
+			 *
 			 * @example
 			 * var handle = PubSub.subscribe("/some/channel", function(){});
 			 * PubSub.unsubscribe(handle);
-			 * 
+			 *
 			 * or
-			 * 
+			 *
 			 * PubSub.unsubscribe("/some/channel", callback);
 			 */
 			unsubscribe: function(handle, callback){
@@ -107,20 +102,35 @@
 					handle = handle.channel;
 				}
 
-				if(typeof handle != 'string')
+				if(typeof handle !== 'string'){
 					throw "invalid or missing channel";
+				}
 
-				if(!(callback instanceof funcType))
+				if(!(callback instanceof funcType)){
 					throw "invalid or missing callback";
+				}
 
 				var subs = channels[handle],
 					len = (subs instanceof Array) ? subs.length : 0;
-				
+
 				while(len--){
-					if(subs[len] === callback)
+					if(subs[len] === callback){
 						subs.splice(len, 1);
+					}
 				}
 			}
 		};
-	};
+	}
+
+	//UMD
+	if(typeof module === 'object'){
+		//CommonJS module
+		module.exports = init();
+	}else if(typeof define === 'function'){
+		//AMD module
+		define("pubsub", init);
+	}else{
+		//traditional namespace
+		context.PubSub = init();
+	}
 }(this));

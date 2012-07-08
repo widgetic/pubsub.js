@@ -132,12 +132,12 @@
 	}
 
 	//UMD
-	if(typeof module === 'object'){
+	if(typeof define === 'function' && define.amd){
+		//AMD module
+		define('pubsub', init);
+	}else if(typeof module === 'object' && module.exports){
 		//CommonJS module
 		module.exports = init();
-	}else if(typeof define === 'function'){
-		//AMD module
-		define("pubsub", init);
 	}else{
 		//traditional namespace
 		context.PubSub = init();

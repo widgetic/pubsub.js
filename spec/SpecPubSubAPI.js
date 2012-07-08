@@ -1,6 +1,6 @@
 /*
  * pubsub.js API unit tests
- * 
+ *
  * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
  */
 
@@ -137,7 +137,7 @@ describe("API", function(){
 			var c = "/test/unsubscribe/5",
 				x = PubSub.subscribe(c, a);
 
-			
+
 			PubSub.publish(c);
 			expect(invoked).toEqual(true);
 
@@ -156,4 +156,4 @@ describe("API", function(){
 			expect(invoked).toEqual(false);
 		});
 	});
-})
+});

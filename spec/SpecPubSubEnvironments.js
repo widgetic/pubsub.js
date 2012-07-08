@@ -1,6 +1,6 @@
 /*
  * pubsub.js environments support unit tests
- * 
+ *
  * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
  */
 
@@ -19,7 +19,7 @@ describe("Supported environments", function(){
 					(api.unsubscribe instanceof Function);
 			}
 		});
-	})
+	});
 
 	it("Should work as a traditional JS module", function(){
 		expect(PubSub).toMatchImplementation();

@@ -125,6 +125,7 @@
 				while(len--){
 					if(subs[len] === callback){
 						subs.splice(len, 1);
+						break;
 					}
 				}
 			}

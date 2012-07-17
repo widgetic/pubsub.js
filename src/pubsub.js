@@ -4,16 +4,24 @@
  * A tiny, optimized, tested, standalone and robust
  * pubsub implementation supporting different javascript environments
  *
- * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
+ * @author Federico "Lox" Lucignano
+ * <https://plus.google.com/117046182016070432246>
+ *
  * @see https://github.com/federico-lox/pubsub.js
  */
-(function(context){
+
+/*global define, module*/
+(function (context) {
+	'use strict';
+
 	/**
 	 * @private
 	 */
-	function init(){
-		var channels = {},// the channel subscription hash
-			funcType = Function;//help minification
+	function init() {
+		//the channel subscription hash
+		var channels = {},
+			//help minification
+			funcType = Function;
 
 		return {
 			/*
@@ -25,24 +33,36 @@
 			 * @param Mixed argument The data to publish, the function supports
 			 * as many data parameters as needed
 			 *
-			 * @example Publish stuff on '/some/channel'. Anything subscribed will
-			 * be called with a function signature like: function(a,b,c){ ... }
-			 * PubSub.publish("/some/channel", "a", "b", {total: 10, min: 1, max: 3});
+			 * @example Publish stuff on '/some/channel'.
+			 * Anything subscribed will be called with a function
+			 * signature like: function(a,b,c){ ... }
+			 *
+			 * PubSub.publish(
+			 *		"/some/channel", "a", "b",
+			 *		{total: 10, min: 1, max: 3}
+			 * );
 			 */
-			publish: function(){
-				var args = arguments,//help minification
-					subs = channels[args[0] /* channel */];
+			publish: function () {
+				//help minification
+				var args = arguments,
+					// args[0] is the channel
+					subs = channels[args[0]],
+					len,
+					params,
+					x;
 
-				if(subs){
-					var len = subs.length,
-						params = (args.length > 1) ? Array.prototype.splice.call(args, 1) : [],
-						x = 0;
+				if (subs) {
+					len = subs.length;
+					params = (args.length > 1) ?
+							Array.prototype.splice.call(args, 1) : [];
 
-					//run the callbacks asynchronously, do not block the main execution process
+					//run the callbacks asynchronously,
+					//do not block the main execution process
 					setTimeout(
-						function(){
-							//executes callbacks in the order in which they were registered
-							for(; x < len; x++){
+						function () {
+							//executes callbacks in the order
+							//in which they were registered
+							for (x = 0; x < len; x += 1) {
 								subs[x].apply(context, params);
 							}
 
@@ -67,18 +87,21 @@
 			 * @return Array A handle which can be used to unsubscribe this
 			 * particular subscription
 			 *
-			 * @example PubSub.subscribe("/some/channel", function(a, b, c){ ... });
+			 * @example PubSub.subscribe(
+			 *				"/some/channel",
+			 *				function(a, b, c){ ... }
+			 *			);
 			 */
-			subscribe: function(channel, callback){
-				if(typeof channel !== 'string'){
+			subscribe: function (channel, callback) {
+				if (typeof channel !== 'string') {
 					throw "invalid or missing channel";
 				}
 
-				if(!(callback instanceof funcType)){
+				if (!(callback instanceof funcType)) {
 					throw "invalid or missing callback";
 				}
 
-				if(!channels[channel]){
+				if (!channels[channel]) {
 					channels[channel] = [];
 				}
 
@@ -95,7 +118,8 @@
 			 * @param Mixed handle The return value from a subscribe call or the
 			 * name of a channel as a String
 			 * @param Function callback [OPTIONAL] The event handler originaally
-			 * registered, not needed if handle contains the return value of subscribe
+			 * registered, not needed if handle contains the return value
+			 * of subscribe
 			 *
 			 * @example
 			 * var handle = PubSub.subscribe("/some/channel", function(){});
@@ -105,26 +129,27 @@
 			 *
 			 * PubSub.unsubscribe("/some/channel", callback);
 			 */
-			unsubscribe: function(handle, callback){
-				if(handle.channel && handle.callback){
+			unsubscribe: function (handle, callback) {
+				if (handle.channel && handle.callback) {
 					callback = handle.callback;
 					handle = handle.channel;
 				}
 
-				if(typeof handle !== 'string'){
+				if (typeof handle !== 'string') {
 					throw "invalid or missing channel";
 				}
 
-				if(!(callback instanceof funcType)){
+				if (!(callback instanceof funcType)) {
 					throw "invalid or missing callback";
 				}
 
 				var subs = channels[handle],
-					len = (subs instanceof Array) ? subs.length : 0;
+					x,
+					y = (subs instanceof Array) ? subs.length : 0;
 
-				while(len--){
-					if(subs[len] === callback){
-						subs.splice(len, 1);
+				for (x = 0; x < y; x += 1) {
+					if (subs[x] === callback) {
+						subs.splice(x, 1);
 						break;
 					}
 				}
@@ -133,13 +158,13 @@
 	}
 
 	//UMD
-	if(typeof define === 'function' && define.amd){
+	if (typeof define === 'function' && define.amd) {
 		//AMD module
 		define('pubsub', init);
-	}else if(typeof module === 'object' && module.exports){
+	} else if (typeof module === 'object' && module.exports) {
 		//CommonJS module
 		module.exports = init();
-	}else{
+	} else {
 		//traditional namespace
 		context.PubSub = init();
 	}

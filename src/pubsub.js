@@ -4,8 +4,7 @@
  * A tiny, optimized, tested, standalone and robust
  * pubsub implementation supporting different javascript environments
  *
- * @author Federico "Lox" Lucignano
- * <https://plus.google.com/117046182016070432246>
+ * @author Federico "Lox" Lucignano <http://plus.ly/federico.lox>
  *
  * @see https://github.com/federico-lox/pubsub.js
  */

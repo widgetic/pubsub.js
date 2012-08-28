@@ -1,5 +1,5 @@
-*.komodoproject
+# Mac #
 .DS_Store
-.externalToolBuilders
-.project
-.settings
+
+# Sublime Text #
+*.sublime-*

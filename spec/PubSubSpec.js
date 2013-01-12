@@ -17,4 +17,6 @@ describe("The PubSub object", function () {
 		expect(typeof PubSub.publish).toBe('function');
 		expect(typeof PubSub.subscribe).toBe('function');
 	});
+
+	//TODO: Finish porting from old spec file
 });

@@ -9,11 +9,11 @@
 describe("The PubSub object", function () {
 	'use strict';
 
-	it("should exist", function(){
+	it("should exist", function () {
 		expect(PubSub).toBeDefined();
 	});
 
-	it("should have a publish and subscribe method", function(){
+	it("should have a publish and subscribe method", function () {
 		expect(typeof PubSub.publish).toBe('function');
 		expect(typeof PubSub.subscribe).toBe('function');
 	});

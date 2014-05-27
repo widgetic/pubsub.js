@@ -1,4 +1,4 @@
-pubsub.js [![Code Climate](https://codeclimate.com/github/federico-lox/pubsub.js.png)](https://codeclimate.com/github/federico-lox/pubsub.js)
+pubsub.js [![Code Climate](https://codeclimate.com/github/federico-lox/pubsub.js.png)](codeclimate)
 =========
 
 A tiny (~600 bytes when minified, ~300 bytes when gzip'd) and robust
@@ -106,3 +106,6 @@ Credits
 *	[Federico "Lox" Lucignano](https://plus.google.com/117046182016070432246 "Google profile"), creator and mantainer
 *	[Daniel Lamb](daniellmb.com), original code
 *	All the [contributors](http://github.com/federico-lox/pubsub.js/contributors "pubsub.js contributors at GitHub")
+
+
+[codeclimate]: https://codeclimate.com/github/federico-lox/pubsub.js

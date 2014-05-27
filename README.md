@@ -1,4 +1,4 @@
-pubsub.js
+pubsub.js [![Code Climate](https://codeclimate.com/github/federico-lox/pubsub.js.png)](https://codeclimate.com/github/federico-lox/pubsub.js)
 =========
 
 A tiny (~600 bytes when minified, ~300 bytes when gzip'd) and robust

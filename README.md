@@ -1,10 +1,10 @@
-pubsub.js
+pubsub.js [![Code Climate](https://codeclimate.com/github/federico-lox/pubsub.js.png?a)][codeclimate]
 =========
 
 A tiny (~600 bytes when minified, ~300 bytes when gzip'd) and robust
-[pubsub](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
-implementation in the spirit of [microjs.com](http://www.microjs.com) evolved
-from an original implementation by [Daniel Lamb](http://daniellmb.com)
+[pubsub][pubsub definition]
+implementation in the spirit of [microjs.com][microjs] evolved
+from an original implementation by [Daniel Lamb][daniel's blog]
 (of which, after refactoring and optimizing, only the method names have been kept,
 hence the change in the project's name).
 
@@ -13,8 +13,8 @@ traditional Javascript environments and the code is optimized to be as compact,
 fast and memory-savvy as possible.
 
 The code has also been tested toroughly and the functionality is secured with a
-complete [set of unit tests](https://github.com/federico-lox/pubsub.js/tree/master/spec)
-built with [Jasmine](http://pivotal.github.com/jasmine/).
+complete [set of unit tests][tests]
+built with [Jasmine][jasmine].
 
 Supported platforms
 -------------------
@@ -36,9 +36,8 @@ Supported platforms
 Documentation
 -------------
 
-The description of each method and its' parameters are inlined in the [library's
-source](https://github.com/federico-lox/pubsub.js/blob/master/src/pubsub.js) using
-the Javadoc syntax.
+The description of each method and its' parameters are inlined in the [library's source][source]
+using the Javadoc syntax.
 
 ### Examples ###
 Using the library as a traditional Javascript module:
@@ -76,7 +75,7 @@ Here's the same example using the library as a standard CommonJS module:
 ```
 
 Alternatively using the library as an AMD module (where possible, see
-[RequireJS](http://requirejs.org/) for more info):
+[RequireJS][requirejs] for more info):
 
 ```javascript
 	require('pubsub', function(p){
@@ -106,3 +105,13 @@ Credits
 *	[Federico "Lox" Lucignano](https://plus.google.com/117046182016070432246 "Google profile"), creator and mantainer
 *	[Daniel Lamb](daniellmb.com), original code
 *	All the [contributors](http://github.com/federico-lox/pubsub.js/contributors "pubsub.js contributors at GitHub")
+
+
+[codeclimate]: https://codeclimate.com/github/federico-lox/pubsub.js
+[pubsub definition]: http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
+[microjs]: http://www.microjs.com
+[daniel's blog]: http://daniellmb.com
+[tests]: https://github.com/federico-lox/pubsub.js/tree/master/spec
+[jasmine]: http://pivotal.github.com/jasmine/
+[source]: https://github.com/federico-lox/pubsub.js/blob/master/src/pubsub.js
+[requirejs]: http://requirejs.org/

@@ -1,0 +1,6 @@
+{
+  "name": "pubsub.js",
+  "version": "0.1.0",
+  "main": "src/pubsub.js",
+  "license": "MIT",
+}
